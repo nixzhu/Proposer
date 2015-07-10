@@ -12,7 +12,7 @@ proposeToAccess(resource:succeeded:failed:)
 
 In real world:
 
-```
+```swift
 @IBAction func choosePhoto() {
 
     let photos: PrivateResource = .Photos
