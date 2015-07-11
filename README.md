@@ -7,7 +7,7 @@ Proposer provides a simple API to request permission for access Camera, Photos, 
 Only one single API:
 
 ```swift
-proposeToAccess(resource:succeeded:failed:)
+proposeToAccess(:agreed:rejected:)
 ```
 
 In real world:
@@ -21,9 +21,7 @@ import Proposer
 
     let photos: PrivateResource = .Photos
 
-    proposeToAccess(photos, succeeded: {
-        print("I can access Photos. :]\n")
-
+    proposeToAccess(photos, agreed: {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .SavedPhotosAlbum
@@ -31,15 +29,33 @@ import Proposer
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
 
-    }, failed: {
+    }, rejected: {
         self.alertNoPermissionToAccess(photos)
     })
 }
 ```
 
+When you want to get user's location, thanks to Swift's enum, you can even choose the usage mode:
+
+```swift
+@IBAction func shareLocation() {
+
+    let location: PrivateResource = .Location(.WhenInUse)
+    
+    proposeToAccess(location, agreed: {
+        print("I can access Location. :]\n")
+        
+    }, rejected: {
+        self.alertNoPermissionToAccess(location)
+    })
+}
+```
+
+Depending on your needs, you must add a `NSLocationWhenInUseUsageDescription` or `NSLocationAlwaysUsageDescription` to your Info.plist
+
 See the demo for more information.
 
-I recommend you add a `UIViewController+Proposer.swift` file (like the demo) for show localized alert before propose or when propose failed.
+I recommend you add a `UIViewController+Proposer.swift` file (like the demo) for show localized alert before the first proposal or when propose failed.
 
 ## Installation
 
@@ -62,7 +78,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'Proposer', '~> 0.5'
+pod 'Proposer', '~> 0.6'
 ```
 
 Then, run the following command:

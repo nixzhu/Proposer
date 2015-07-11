@@ -15,9 +15,7 @@ class ViewController: UIViewController {
 
         let photos: PrivateResource = .Photos
 
-        proposeToAccess(photos, succeeded: {
-            print("I can access Photos. :]\n")
-
+        proposeToAccess(photos, agreed: {
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .SavedPhotosAlbum
@@ -25,7 +23,7 @@ class ViewController: UIViewController {
                 self.presentViewController(imagePicker, animated: true, completion: nil)
             }
 
-        }, failed: {
+        }, rejected: {
             self.alertNoPermissionToAccess(photos)
         })
     }
@@ -34,9 +32,7 @@ class ViewController: UIViewController {
 
         let camera: PrivateResource = .Camera
 
-        proposeToAccess(camera, succeeded: {
-            print("I can access Camera. :]\n")
-
+        proposeToAccess(camera, agreed: {
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .Camera
@@ -44,7 +40,7 @@ class ViewController: UIViewController {
                 self.presentViewController(imagePicker, animated: true, completion: nil)
             }
 
-        }, failed: {
+        }, rejected: {
             self.alertNoPermissionToAccess(camera)
         })
     }
@@ -53,10 +49,10 @@ class ViewController: UIViewController {
 
         let microphone: PrivateResource = .Microphone
 
-        proposeToAccess(microphone, succeeded: {
+        proposeToAccess(microphone, agreed: {
             print("I can access Microphone. :]\n")
 
-        }, failed: {
+        }, rejected: {
             self.alertNoPermissionToAccess(microphone)
         })
     }
@@ -67,10 +63,10 @@ class ViewController: UIViewController {
 
         let propose: Propose = {
 
-            proposeToAccess(contacts, succeeded: {
+            proposeToAccess(contacts, agreed: {
                 print("I can access Contacts. :]\n")
 
-            }, failed: {
+            }, rejected: {
                 self.alertNoPermissionToAccess(contacts)
             })
         }
@@ -82,10 +78,10 @@ class ViewController: UIViewController {
 
         let location: PrivateResource = .Location(.WhenInUse)
         
-        proposeToAccess(location, succeeded: {
+        proposeToAccess(location, agreed: {
             print("I can access Location. :]\n")
             
-        }, failed: {
+        }, rejected: {
             self.alertNoPermissionToAccess(location)
         })
     }

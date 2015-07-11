@@ -44,96 +44,96 @@ public typealias Propose = () -> Void
 
 public typealias ProposerAction = () -> Void
 
-public func proposeToAccess(resource: PrivateResource, succeeded succeededAction: ProposerAction, failed failedAction: ProposerAction) {
+public func proposeToAccess(resource: PrivateResource, agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
 
     switch resource {
 
     case .Photos:
-        requestPhotos(succeededAction, failedAction)
+        proposeToAccessPhotos(agreed: successAction, rejected: failureAction)
 
     case .Camera:
-        requestCamera(succeededAction, failedAction)
+        proposeToAccessCamera(agreed: successAction, rejected: failureAction)
 
     case .Microphone:
-        requestMicrophone(succeededAction, failedAction)
+        proposeToAccessMicrophone(agreed: successAction, rejected: failureAction)
 
     case .Contacts:
-        requestContacts(succeededAction, failedAction)
+        proposeToAccessContacts(agreed: successAction, rejected: failureAction)
 
     case .Location(let usage):
-        requestLocation(usage, succeededAction, failedAction)
+        proposeToAccessLocation(usage, agreed: successAction, rejected: failureAction)
     }
 }
 
-private func requestPhotos(succeeded: ProposerAction, failed: ProposerAction) {
+private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     PHPhotoLibrary.requestAuthorization { status in
         dispatch_async(dispatch_get_main_queue()) {
             switch status {
             case .Authorized:
-                succeeded()
+                successAction()
             default:
-                failed()
+                failureAction()
             }
         }
     }
 }
 
-private func requestCamera(succeeded: ProposerAction, failed: ProposerAction) {
+private func proposeToAccessCamera(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted in
         dispatch_async(dispatch_get_main_queue()) {
-            granted ? succeeded() : failed()
+            granted ? successAction() : failureAction()
         }
     }
 }
 
-private func requestMicrophone(succeeded: ProposerAction, failed: ProposerAction) {
+private func proposeToAccessMicrophone(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     AVAudioSession.sharedInstance().requestRecordPermission { granted in
         dispatch_async(dispatch_get_main_queue()) {
-            granted ? succeeded() : failed()
+            granted ? successAction() : failureAction()
         }
     }
 }
 
-private func requestContacts(succeeded: ProposerAction, failed: ProposerAction) {
+private func proposeToAccessContacts(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
 
     switch ABAddressBookGetAuthorizationStatus() {
 
     case .Authorized:
-        succeeded()
+        successAction()
 
     case .NotDetermined:
         if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
             ABAddressBookRequestAccessWithCompletion(addressBook, { granted, error in
                 dispatch_async(dispatch_get_main_queue()) {
                     if granted {
-                        succeeded()
+                        successAction()
                     } else {
-                        failed()
+                        failureAction()
                     }
                 }
             })
         }
 
     default:
-        failed()
+        failureAction()
     }
 }
 
 private var _locationManager: CLLocationManager? // as strong ref
 
-private func requestLocation(locationUsage: PrivateResource.LocationUsage, succeeded: ProposerAction, failed: ProposerAction) {
+private func proposeToAccessLocation(locationUsage: PrivateResource.LocationUsage, agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
 
     switch CLLocationManager.authorizationStatus() {
 
     case .AuthorizedWhenInUse:
         if locationUsage == .WhenInUse {
-            succeeded()
+            successAction()
         } else {
-            failed()
+            failureAction()
         }
 
     case .AuthorizedAlways:
-        succeeded()
+        successAction()
 
     case .NotDetermined:
         if CLLocationManager.locationServicesEnabled() {
@@ -142,7 +142,7 @@ private func requestLocation(locationUsage: PrivateResource.LocationUsage, succe
 
             _locationManager = locationManager
 
-            let delegate = LocationDelegate(locationUsage: locationUsage, succeeded: succeeded, failed: failed)
+            let delegate = LocationDelegate(locationUsage: locationUsage, successAction: successAction, failureAction: failureAction)
             locationManager.delegate = delegate
 
             _locationDelegate = delegate
@@ -159,11 +159,11 @@ private func requestLocation(locationUsage: PrivateResource.LocationUsage, succe
             locationManager.startUpdatingLocation()
 
         } else {
-            failed()
+            failureAction()
         }
 
     default:
-        failed()
+        failureAction()
     }
 }
 
@@ -174,13 +174,13 @@ private var _locationDelegate: LocationDelegate? // as strong ref
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
 
     let locationUsage: PrivateResource.LocationUsage
-    let succeeded: ProposerAction
-    let failed: ProposerAction
+    let successAction: ProposerAction
+    let failureAction: ProposerAction
 
-    init(locationUsage: PrivateResource.LocationUsage, succeeded: ProposerAction, failed: ProposerAction) {
+    init(locationUsage: PrivateResource.LocationUsage, successAction: ProposerAction, failureAction: ProposerAction) {
         self.locationUsage = locationUsage
-        self.succeeded = succeeded
-        self.failed = failed
+        self.successAction = successAction
+        self.failureAction = failureAction
     }
 
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -190,19 +190,19 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
             switch status {
 
             case .AuthorizedWhenInUse:
-                self.locationUsage == .WhenInUse ? self.succeeded() : self.failed()
+                self.locationUsage == .WhenInUse ? self.successAction() : self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
 
             case .AuthorizedAlways:
-                self.locationUsage == .Always ? self.succeeded() : self.failed()
+                self.locationUsage == .Always ? self.successAction() : self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
 
             case .Denied:
-                self.failed()
+                self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
