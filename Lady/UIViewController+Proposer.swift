@@ -37,7 +37,7 @@ extension PrivateResource {
         case .Contacts:
             return NSLocalizedString("Proposer can NOT access your Contacts, but you can change it in iOS Settings.", comment: "")
         case .Location:
-            return NSLocalizedString("Proposer can NOT access your Location, but you can change it in iOS Settings.", comment: "")
+            return NSLocalizedString("Proposer can NOT get your Location, but you can change it in iOS Settings.", comment: "")
         }
     }
 }
