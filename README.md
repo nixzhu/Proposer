@@ -2,6 +2,10 @@
 
 Proposer provides a simple API to request permission for access Camera, Photos, Microphone, Contacts, Location.
 
+## Requirements
+
+Swift 1.2, iOS 8.0
+
 ## Example
 
 Only one single API:
