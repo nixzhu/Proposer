@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A216g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yVa-Y4-QEo">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Lady-->
@@ -17,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGp-Ey-Q8x">
-                                <rect key="frame" x="171" y="285" width="98" height="30"/>
+                                <rect key="frame" x="16" y="264" width="279" height="72"/>
                                 <animations/>
                                 <state key="normal" title="Choose Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,7 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuU-Rb-AoN">
-                                <rect key="frame" x="182" y="345" width="77" height="30"/>
+                                <rect key="frame" x="16" y="346" width="279" height="71"/>
                                 <animations/>
                                 <state key="normal" title="Take Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,7 +38,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eB-xY-hXe">
-                                <rect key="frame" x="173" y="405" width="94" height="30"/>
+                                <rect key="frame" x="16" y="427" width="279" height="72"/>
                                 <animations/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,7 +48,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5n-uM-Ksd">
-                                <rect key="frame" x="169" y="465" width="103" height="30"/>
+                                <rect key="frame" x="16" y="509" width="279" height="71"/>
                                 <animations/>
                                 <state key="normal" title="Read Contacts">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,7 +58,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otq-Jj-PhF">
-                                <rect key="frame" x="328" y="285" width="104" height="30"/>
+                                <rect key="frame" x="305" y="264" width="279" height="72"/>
                                 <animations/>
                                 <state key="normal" title="Share Location">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -70,16 +71,26 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="5Pw-ao-gUc"/>
-                            <constraint firstItem="8eB-xY-hXe" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="bottom" constant="30" id="8kK-MF-cZy"/>
-                            <constraint firstItem="M5n-uM-Ksd" firstAttribute="top" secondItem="8eB-xY-hXe" secondAttribute="bottom" constant="30" id="DCg-Zh-wtl"/>
-                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="centerX" secondItem="WGp-Ey-Q8x" secondAttribute="centerX" id="Oq0-zu-ZvN"/>
-                            <constraint firstAttribute="centerX" secondItem="WGp-Ey-Q8x" secondAttribute="centerX" constant="80" id="Tq6-k1-1qM"/>
-                            <constraint firstItem="8eB-xY-hXe" firstAttribute="centerX" secondItem="M5n-uM-Ksd" secondAttribute="centerX" id="WDK-Ea-Hjq"/>
-                            <constraint firstItem="8eB-xY-hXe" firstAttribute="centerX" secondItem="HuU-Rb-AoN" secondAttribute="centerX" id="jsp-EU-zDm"/>
-                            <constraint firstAttribute="centerY" secondItem="otq-Jj-PhF" secondAttribute="centerY" id="nS6-Fs-bZ8"/>
-                            <constraint firstAttribute="centerX" secondItem="otq-Jj-PhF" secondAttribute="centerX" constant="-80" id="ubb-j9-mRb"/>
-                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="top" secondItem="WGp-Ey-Q8x" secondAttribute="bottom" constant="30" id="vkT-65-lYF"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M5n-uM-Ksd" secondAttribute="bottom" constant="20" id="3GD-60-JwR"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="3Pr-tc-cft"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="5SB-zs-22Q"/>
+                            <constraint firstItem="M5n-uM-Ksd" firstAttribute="height" secondItem="8eB-xY-hXe" secondAttribute="height" id="71k-HE-I2b"/>
+                            <constraint firstItem="WGp-Ey-Q8x" firstAttribute="width" secondItem="otq-Jj-PhF" secondAttribute="width" id="7hH-zC-RXM"/>
+                            <constraint firstItem="M5n-uM-Ksd" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="9Qe-XG-NGP"/>
+                            <constraint firstItem="otq-Jj-PhF" firstAttribute="leading" secondItem="WGp-Ey-Q8x" secondAttribute="trailing" constant="10" id="IDD-4X-mci"/>
+                            <constraint firstItem="M5n-uM-Ksd" firstAttribute="top" secondItem="8eB-xY-hXe" secondAttribute="bottom" constant="10" id="JfE-iH-Ykq"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="height" secondItem="8eB-xY-hXe" secondAttribute="height" id="LMR-go-inD"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="leading" secondItem="WGp-Ey-Q8x" secondAttribute="leading" id="LmD-ar-joI"/>
+                            <constraint firstItem="WGp-Ey-Q8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Q03-Si-dqK"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="top" secondItem="WGp-Ey-Q8x" secondAttribute="bottom" constant="10" id="WAB-qM-gwL"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bEO-dn-RoJ"/>
+                            <constraint firstItem="M5n-uM-Ksd" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bxS-ze-yLo"/>
+                            <constraint firstItem="8eB-xY-hXe" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="bottom" constant="10" id="ipi-za-oIN"/>
+                            <constraint firstItem="otq-Jj-PhF" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="jLH-12-tco"/>
+                            <constraint firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="mh8-2k-K6h"/>
+                            <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="WGp-Ey-Q8x" secondAttribute="trailing" id="n9Q-Wk-MN6"/>
+                            <constraint firstItem="otq-Jj-PhF" firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="rXg-lv-u56"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="otq-Jj-PhF" secondAttribute="trailing" id="sUX-PW-6pD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Lady" id="U78-QE-H0S"/>

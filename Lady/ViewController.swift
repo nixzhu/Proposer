@@ -16,6 +16,8 @@ class ViewController: UIViewController {
         let photos: PrivateResource = .Photos
 
         proposeToAccess(photos, agreed: {
+            print("I can access Photos. :]\n")
+
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .SavedPhotosAlbum
@@ -33,6 +35,8 @@ class ViewController: UIViewController {
         let camera: PrivateResource = .Camera
 
         proposeToAccess(camera, agreed: {
+            print("I can access Camera. :]\n")
+
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .Camera
