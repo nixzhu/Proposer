@@ -112,7 +112,7 @@ $ brew install carthage
 To integrate Proposer into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "nixzhu/Proposer" >= 0.6
+github "nixzhu/Proposer" >= 0.6.1
 ```
 
 Then, run the following command to build the Proposer framework:
