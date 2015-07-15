@@ -139,13 +139,12 @@ private func proposeToAccessLocation(locationUsage: PrivateResource.LocationUsag
         if CLLocationManager.locationServicesEnabled() {
 
             let locationManager = CLLocationManager()
-
             _locationManager = locationManager
 
             let delegate = LocationDelegate(locationUsage: locationUsage, successAction: successAction, failureAction: failureAction)
-            locationManager.delegate = delegate
-
             _locationDelegate = delegate
+
+            locationManager.delegate = delegate
 
             switch locationUsage {
 
