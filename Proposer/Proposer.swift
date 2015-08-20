@@ -182,7 +182,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         self.failureAction = failureAction
     }
 
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
 
         dispatch_async(dispatch_get_main_queue()) {
 
