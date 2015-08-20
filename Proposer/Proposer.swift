@@ -80,7 +80,7 @@ private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejecte
 
 private func proposeToAccessCamera(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted in
-        Async.Main) {
+        Async.Main {
             granted ? successAction() : failureAction()
         }
     }
@@ -216,8 +216,9 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
 // MARK: - Async 
 
 struct Async {
-  static func Main(f: () -> Void) {
-    Async.Main, f)
+    
+    static func Main(f: () -> Void) {
+        dispatch_async(dispatch_get_main_queue(), f)
   }
 }
 
