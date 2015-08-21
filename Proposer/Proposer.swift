@@ -200,14 +200,11 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
                 _locationManager = nil
                 _locationDelegate = nil
 
-            case .Denied:
+            case .Denied, .NotDetermined, .Restricted:
                 self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
-
-            default:
-                break
             }
         }
     }
