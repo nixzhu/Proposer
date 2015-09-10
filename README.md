@@ -9,7 +9,9 @@ Proposer provides a simple API to request permission for access Camera, Photos, 
 
 ## Requirements
 
-Swift 1.2, iOS 8.0
+Swift 2.0, iOS 8.0
+
+(Project with Swift 1.2 can still use version 0.6.2)
 
 ## Example
 
