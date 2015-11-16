@@ -38,6 +38,26 @@ public enum PrivateResource {
             return CLLocationManager.authorizationStatus() == .NotDetermined
         }
     }
+
+    public var isAuthorized: Bool {
+        switch self {
+        case .Photos:
+            return PHPhotoLibrary.authorizationStatus() == .Authorized
+        case .Camera:
+            return AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Authorized
+        case .Microphone:
+            return AVAudioSession.sharedInstance().recordPermission() == .Granted
+        case .Contacts:
+            return ABAddressBookGetAuthorizationStatus() == .Authorized
+        case .Location(let usage):
+            switch usage {
+            case .WhenInUse:
+                return CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
+            case .Always:
+                return CLLocationManager.authorizationStatus() == .AuthorizedAlways
+            }
+        }
+    }
 }
 
 public typealias Propose = () -> Void
