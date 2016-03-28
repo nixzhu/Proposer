@@ -5,13 +5,11 @@
 
 # Proposer
 
-Proposer provides a single API to request permission for access **Camera**, **Photos**, **Microphone**, **Contacts** or **Location**.
+Proposer provides a single API to request permission for access **Camera**, **Photos**, **Microphone**, **Contacts**, **Reminders**, **Calendar** or **Location**.
 
 ## Requirements
 
 Swift 2.0, iOS 8.0
-
-(Project with Swift 1.2 can still use version 0.6.2)
 
 ## Example
 
@@ -89,7 +87,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'Proposer', '~> 0.7.1'
+pod 'Proposer', '~> 0.8.0'
 ```
 
 Then, run the following command:
@@ -114,7 +112,7 @@ $ brew install carthage
 To integrate Proposer into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "nixzhu/Proposer" >= 0.7.1
+github "nixzhu/Proposer" >= 0.8.0
 ```
 
 Then, run the following command to build the Proposer framework:
