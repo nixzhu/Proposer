@@ -90,5 +90,28 @@ class ViewController: UIViewController {
         })
     }
 
+    @IBAction func addReminder() {
+
+        let reminders: PrivateResource = .Reminders
+
+        proposeToAccess(reminders, agreed: { 
+            print("I can access Reminders. :]\n")
+
+        }, rejected: {
+            self.alertNoPermissionToAccess(reminders)
+        })
+    }
+
+    @IBAction func addCalendarEvent() {
+
+        let calendar: PrivateResource = .Calendar
+
+        proposeToAccess(calendar, agreed: {
+            print("I can access Calendar. :]\n")
+
+        }, rejected: {
+            self.alertNoPermissionToAccess(calendar)
+        })
+    }
 }
 

@@ -21,6 +21,10 @@ extension PrivateResource {
             return NSLocalizedString("Proposer need to access your Microphone to record audio.", comment: "")
         case .Contacts:
             return NSLocalizedString("Proposer need to access your Contacts to match friends.", comment: "")
+        case .Reminders:
+            return NSLocalizedString("Proposer need to access your Reminders to create reminder.", comment: "")
+        case .Calendar:
+            return NSLocalizedString("Proposer need to access your Calendar to create event.", comment: "")
         case .Location:
             return NSLocalizedString("Proposer need to get your Location to share to your friends.", comment: "")
         }
@@ -36,6 +40,10 @@ extension PrivateResource {
             return NSLocalizedString("Proposer can NOT access your Microphone, but you can change it in iOS Settings.", comment: "")
         case .Contacts:
             return NSLocalizedString("Proposer can NOT access your Contacts, but you can change it in iOS Settings.", comment: "")
+        case .Reminders:
+            return NSLocalizedString("Proposer can NOT access your Reminders, but you can change it in iOS Settings.", comment: "")
+        case .Calendar:
+            return NSLocalizedString("Proposer can NOT access your Calendar, but you can change it in iOS Settings.", comment: "")
         case .Location:
             return NSLocalizedString("Proposer can NOT get your Location, but you can change it in iOS Settings.", comment: "")
         }

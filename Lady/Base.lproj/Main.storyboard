@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A216g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yVa-Y4-QEo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yVa-Y4-QEo">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -18,8 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGp-Ey-Q8x">
-                                <rect key="frame" x="16" y="264" width="279" height="72"/>
-                                <animations/>
+                                <rect key="frame" x="20" y="264" width="275" height="72"/>
                                 <state key="normal" title="Choose Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -28,8 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuU-Rb-AoN">
-                                <rect key="frame" x="16" y="346" width="279" height="71"/>
-                                <animations/>
+                                <rect key="frame" x="20" y="346" width="275" height="71"/>
                                 <state key="normal" title="Take Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -38,8 +37,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eB-xY-hXe">
-                                <rect key="frame" x="16" y="427" width="279" height="72"/>
-                                <animations/>
+                                <rect key="frame" x="20" y="427" width="275" height="72"/>
                                 <state key="normal" title="Record Audio">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -48,8 +46,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5n-uM-Ksd">
-                                <rect key="frame" x="16" y="509" width="279" height="71"/>
-                                <animations/>
+                                <rect key="frame" x="20" y="509" width="275" height="71"/>
                                 <state key="normal" title="Read Contacts">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -57,9 +54,26 @@
                                     <action selector="readContacts" destination="BYZ-38-t0r" eventType="touchUpInside" id="VfD-U6-Oj4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOc-Os-IDA">
+                                <rect key="frame" x="305" y="346" width="275" height="71"/>
+                                <state key="normal" title="Add Reminder">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addReminder" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aby-Ef-aQ3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6M-fk-EaK">
+                                <rect key="frame" x="305" y="427" width="275" height="72"/>
+                                <state key="normal" title="Add Calendar Event">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addCalendarEvent" destination="BYZ-38-t0r" eventType="touchUpInside" id="EgO-66-O9b"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otq-Jj-PhF">
-                                <rect key="frame" x="305" y="264" width="279" height="72"/>
-                                <animations/>
+                                <rect key="frame" x="305" y="264" width="275" height="72"/>
                                 <state key="normal" title="Share Location">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -68,25 +82,32 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M5n-uM-Ksd" secondAttribute="bottom" constant="20" id="3GD-60-JwR"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="3Pr-tc-cft"/>
+                            <constraint firstItem="WOc-Os-IDA" firstAttribute="bottom" secondItem="HuU-Rb-AoN" secondAttribute="bottom" id="44e-tA-Inp"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="5SB-zs-22Q"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="height" secondItem="8eB-xY-hXe" secondAttribute="height" id="71k-HE-I2b"/>
                             <constraint firstItem="WGp-Ey-Q8x" firstAttribute="width" secondItem="otq-Jj-PhF" secondAttribute="width" id="7hH-zC-RXM"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="9Qe-XG-NGP"/>
+                            <constraint firstItem="WOc-Os-IDA" firstAttribute="leading" secondItem="otq-Jj-PhF" secondAttribute="leading" id="CvP-SV-4e3"/>
                             <constraint firstItem="otq-Jj-PhF" firstAttribute="leading" secondItem="WGp-Ey-Q8x" secondAttribute="trailing" constant="10" id="IDD-4X-mci"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="top" secondItem="8eB-xY-hXe" secondAttribute="bottom" constant="10" id="JfE-iH-Ykq"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="height" secondItem="8eB-xY-hXe" secondAttribute="height" id="LMR-go-inD"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="leading" secondItem="WGp-Ey-Q8x" secondAttribute="leading" id="LmD-ar-joI"/>
                             <constraint firstItem="WGp-Ey-Q8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Q03-Si-dqK"/>
+                            <constraint firstItem="WOc-Os-IDA" firstAttribute="trailing" secondItem="otq-Jj-PhF" secondAttribute="trailing" id="QG4-lS-B7p"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="top" secondItem="WGp-Ey-Q8x" secondAttribute="bottom" constant="10" id="WAB-qM-gwL"/>
+                            <constraint firstItem="Q6M-fk-EaK" firstAttribute="trailing" secondItem="WOc-Os-IDA" secondAttribute="trailing" id="ZHB-hA-NaI"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bEO-dn-RoJ"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bxS-ze-yLo"/>
+                            <constraint firstItem="Q6M-fk-EaK" firstAttribute="leading" secondItem="WOc-Os-IDA" secondAttribute="leading" id="exj-cn-nVp"/>
+                            <constraint firstItem="Q6M-fk-EaK" firstAttribute="top" secondItem="8eB-xY-hXe" secondAttribute="top" id="fwI-Ls-b13"/>
+                            <constraint firstItem="WOc-Os-IDA" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="top" id="iLs-QS-MPw"/>
                             <constraint firstItem="8eB-xY-hXe" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="bottom" constant="10" id="ipi-za-oIN"/>
                             <constraint firstItem="otq-Jj-PhF" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="jLH-12-tco"/>
+                            <constraint firstItem="Q6M-fk-EaK" firstAttribute="bottom" secondItem="8eB-xY-hXe" secondAttribute="bottom" id="l1y-rA-mI4"/>
                             <constraint firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="mh8-2k-K6h"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="WGp-Ey-Q8x" secondAttribute="trailing" id="n9Q-Wk-MN6"/>
                             <constraint firstItem="otq-Jj-PhF" firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="rXg-lv-u56"/>
@@ -107,7 +128,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YOy-17-ONQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
