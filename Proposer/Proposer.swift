@@ -104,7 +104,7 @@ public func proposeToAccess(resource: PrivateResource, agreed successAction: Pro
 
 private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     PHPhotoLibrary.requestAuthorization { status in
-        dispatch_async(dispatch_get_main_queue()) {
+        Async.Main {
             switch status {
             case .Authorized:
                 successAction()
@@ -117,7 +117,7 @@ private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejecte
 
 private func proposeToAccessCamera(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted in
-        dispatch_async(dispatch_get_main_queue()) {
+        Async.Main {
             granted ? successAction() : failureAction()
         }
     }
@@ -125,7 +125,7 @@ private func proposeToAccessCamera(agreed successAction: ProposerAction, rejecte
 
 private func proposeToAccessMicrophone(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
     AVAudioSession.sharedInstance().requestRecordPermission { granted in
-        dispatch_async(dispatch_get_main_queue()) {
+        Async.Main {
             granted ? successAction() : failureAction()
         }
     }
@@ -141,7 +141,7 @@ private func proposeToAccessContacts(agreed successAction: ProposerAction, rejec
     case .NotDetermined:
         if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
             ABAddressBookRequestAccessWithCompletion(addressBook, { granted, error in
-                dispatch_async(dispatch_get_main_queue()) {
+                Async.Main {
                     if granted {
                         successAction()
                     } else {
@@ -241,7 +241,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
 
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
 
-        dispatch_async(dispatch_get_main_queue()) {
+        Async.Main {
 
             switch status {
 
@@ -268,5 +268,14 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
             }
         }
     }
+}
+
+// MARK: - Async 
+
+struct Async {
+    
+    static func Main(f: () -> Void) {
+        dispatch_async(dispatch_get_main_queue(), f)
+  }
 }
 
