@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import Photos
 import AddressBook
+import Contacts
 import EventKit
 import CoreLocation
 
@@ -133,14 +134,14 @@ private func proposeToAccessMicrophone(agreed successAction: ProposerAction, rej
 
 private func proposeToAccessContacts(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
 
-    switch ABAddressBookGetAuthorizationStatus() {
-
-    case .Authorized:
-        successAction()
-
-    case .NotDetermined:
-        if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
-            ABAddressBookRequestAccessWithCompletion(addressBook, { granted, error in
+    if #available(iOS 9.0, *) {
+        switch CNContactStore.authorizationStatusForEntityType(.Contacts) {
+            
+        case .Authorized:
+            successAction()
+            
+        case .NotDetermined:
+            CNContactStore().requestAccessForEntityType(.Contacts) { granted, error in
                 dispatch_async(dispatch_get_main_queue()) {
                     if granted {
                         successAction()
@@ -148,11 +149,34 @@ private func proposeToAccessContacts(agreed successAction: ProposerAction, rejec
                         failureAction()
                     }
                 }
-            })
+            }
+            
+        default:
+            failureAction()
         }
 
-    default:
-        failureAction()
+    } else {
+        switch ABAddressBookGetAuthorizationStatus() {
+
+        case .Authorized:
+            successAction()
+
+        case .NotDetermined:
+            if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
+                ABAddressBookRequestAccessWithCompletion(addressBook) { granted, error in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if granted {
+                            successAction()
+                        } else {
+                            failureAction()
+                        }
+                    }
+                }
+            }
+            
+        default:
+            failureAction()
+        }
     }
 }
 
