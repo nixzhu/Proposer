@@ -15,58 +15,58 @@ import EventKit
 import CoreLocation
 
 public enum PrivateResource {
-    case Photos
-    case Camera
-    case Microphone
-    case Contacts
-    case Reminders
-    case Calendar
+    case photos
+    case camera
+    case microphone
+    case contacts
+    case reminders
+    case calendar
 
     public enum LocationUsage {
-        case WhenInUse
-        case Always
+        case whenInUse
+        case always
     }
-    case Location(LocationUsage)
+    case location(LocationUsage)
 
     public var isNotDeterminedAuthorization: Bool {
         switch self {
-        case .Photos:
-            return PHPhotoLibrary.authorizationStatus() == .NotDetermined
-        case .Camera:
-            return AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .NotDetermined
-        case .Microphone:
-            return AVAudioSession.sharedInstance().recordPermission() == .Undetermined
-        case .Contacts:
-            return ABAddressBookGetAuthorizationStatus() == .NotDetermined
-        case .Reminders:
-            return EKEventStore.authorizationStatusForEntityType(.Reminder) == .NotDetermined
-        case .Calendar:
-            return EKEventStore.authorizationStatusForEntityType(.Event) == .NotDetermined
-        case .Location:
-            return CLLocationManager.authorizationStatus() == .NotDetermined
+        case .photos:
+            return PHPhotoLibrary.authorizationStatus() == .notDetermined
+        case .camera:
+            return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .notDetermined
+        case .microphone:
+            return AVAudioSession.sharedInstance().recordPermission() == .undetermined
+        case .contacts:
+            return ABAddressBookGetAuthorizationStatus() == .notDetermined
+        case .reminders:
+            return EKEventStore.authorizationStatus(for: .reminder) == .notDetermined
+        case .calendar:
+            return EKEventStore.authorizationStatus(for: .event) == .notDetermined
+        case .location:
+            return CLLocationManager.authorizationStatus() == .notDetermined
         }
     }
 
     public var isAuthorized: Bool {
         switch self {
-        case .Photos:
-            return PHPhotoLibrary.authorizationStatus() == .Authorized
-        case .Camera:
-            return AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Authorized
-        case .Microphone:
-            return AVAudioSession.sharedInstance().recordPermission() == .Granted
-        case .Contacts:
-            return ABAddressBookGetAuthorizationStatus() == .Authorized
-        case .Reminders:
-            return EKEventStore.authorizationStatusForEntityType(.Reminder) == .Authorized
-        case .Calendar:
-            return EKEventStore.authorizationStatusForEntityType(.Event) == .Authorized
-        case .Location(let usage):
+        case .photos:
+            return PHPhotoLibrary.authorizationStatus() == .authorized
+        case .camera:
+            return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
+        case .microphone:
+            return AVAudioSession.sharedInstance().recordPermission() == .granted
+        case .contacts:
+            return ABAddressBookGetAuthorizationStatus() == .authorized
+        case .reminders:
+            return EKEventStore.authorizationStatus(for: .reminder) == .authorized
+        case .calendar:
+            return EKEventStore.authorizationStatus(for: .event) == .authorized
+        case .location(let usage):
             switch usage {
-            case .WhenInUse:
-                return CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
-            case .Always:
-                return CLLocationManager.authorizationStatus() == .AuthorizedAlways
+            case .whenInUse:
+                return CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+            case .always:
+                return CLLocationManager.authorizationStatus() == .authorizedAlways
             }
         }
     }
@@ -76,38 +76,38 @@ public typealias Propose = () -> Void
 
 public typealias ProposerAction = () -> Void
 
-public func proposeToAccess(resource: PrivateResource, agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+public func proposeToAccess(_ resource: PrivateResource, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
 
     switch resource {
 
-    case .Photos:
+    case .photos:
         proposeToAccessPhotos(agreed: successAction, rejected: failureAction)
 
-    case .Camera:
+    case .camera:
         proposeToAccessCamera(agreed: successAction, rejected: failureAction)
 
-    case .Microphone:
+    case .microphone:
         proposeToAccessMicrophone(agreed: successAction, rejected: failureAction)
 
-    case .Contacts:
+    case .contacts:
         proposeToAccessContacts(agreed: successAction, rejected: failureAction)
 
-    case .Reminders:
-        proposeToAccessEventForEntityType(.Reminder, agreed: successAction, rejected: failureAction)
+    case .reminders:
+        proposeToAccessEventForEntityType(.reminder, agreed: successAction, rejected: failureAction)
 
-    case .Calendar:
-        proposeToAccessEventForEntityType(.Event, agreed: successAction, rejected: failureAction)
+    case .calendar:
+        proposeToAccessEventForEntityType(.event, agreed: successAction, rejected: failureAction)
 
-    case .Location(let usage):
+    case .location(let usage):
         proposeToAccessLocation(usage, agreed: successAction, rejected: failureAction)
     }
 }
 
-private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+private func proposeToAccessPhotos(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
     PHPhotoLibrary.requestAuthorization { status in
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             switch status {
-            case .Authorized:
+            case .authorized:
                 successAction()
             default:
                 failureAction()
@@ -116,33 +116,33 @@ private func proposeToAccessPhotos(agreed successAction: ProposerAction, rejecte
     }
 }
 
-private func proposeToAccessCamera(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
-    AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted in
-        dispatch_async(dispatch_get_main_queue()) {
+private func proposeToAccessCamera(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
+    AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
+        DispatchQueue.main.async {
             granted ? successAction() : failureAction()
         }
     }
 }
 
-private func proposeToAccessMicrophone(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+private func proposeToAccessMicrophone(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
     AVAudioSession.sharedInstance().requestRecordPermission { granted in
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             granted ? successAction() : failureAction()
         }
     }
 }
 
-private func proposeToAccessContacts(agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+private func proposeToAccessContacts(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
 
     if #available(iOS 9.0, *) {
-        switch CNContactStore.authorizationStatusForEntityType(.Contacts) {
+        switch CNContactStore.authorizationStatus(for: .contacts) {
             
-        case .Authorized:
+        case .authorized:
             successAction()
             
-        case .NotDetermined:
-            CNContactStore().requestAccessForEntityType(.Contacts) { granted, error in
-                dispatch_async(dispatch_get_main_queue()) {
+        case .notDetermined:
+            CNContactStore().requestAccess(for: .contacts) { granted, error in
+                DispatchQueue.main.async {
                     if granted {
                         successAction()
                     } else {
@@ -158,13 +158,13 @@ private func proposeToAccessContacts(agreed successAction: ProposerAction, rejec
     } else {
         switch ABAddressBookGetAuthorizationStatus() {
 
-        case .Authorized:
+        case .authorized:
             successAction()
 
-        case .NotDetermined:
+        case .notDetermined:
             if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
                 ABAddressBookRequestAccessWithCompletion(addressBook) { granted, error in
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         if granted {
                             successAction()
                         } else {
@@ -180,14 +180,14 @@ private func proposeToAccessContacts(agreed successAction: ProposerAction, rejec
     }
 }
 
-private func proposeToAccessEventForEntityType(entityYype: EKEntityType, agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+private func proposeToAccessEventForEntityType(_ entityYype: EKEntityType, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
 
-    switch EKEventStore.authorizationStatusForEntityType(entityYype) {
-    case .Authorized:
+    switch EKEventStore.authorizationStatus(for: entityYype) {
+    case .authorized:
         successAction()
-    case .NotDetermined:
-        EKEventStore().requestAccessToEntityType(entityYype) { granted, error in
-            dispatch_async(dispatch_get_main_queue()) {
+    case .notDetermined:
+        EKEventStore().requestAccess(to: entityYype) { granted, error in
+            DispatchQueue.main.async {
                 if granted {
                     successAction()
                 } else {
@@ -202,21 +202,21 @@ private func proposeToAccessEventForEntityType(entityYype: EKEntityType, agreed 
 
 private var _locationManager: CLLocationManager? // as strong ref
 
-private func proposeToAccessLocation(locationUsage: PrivateResource.LocationUsage, agreed successAction: ProposerAction, rejected failureAction: ProposerAction) {
+private func proposeToAccessLocation(_ locationUsage: PrivateResource.LocationUsage, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
 
     switch CLLocationManager.authorizationStatus() {
 
-    case .AuthorizedWhenInUse:
-        if locationUsage == .WhenInUse {
+    case .authorizedWhenInUse:
+        if locationUsage == .whenInUse {
             successAction()
         } else {
             failureAction()
         }
 
-    case .AuthorizedAlways:
+    case .authorizedAlways:
         successAction()
 
-    case .NotDetermined:
+    case .notDetermined:
         if CLLocationManager.locationServicesEnabled() {
 
             let locationManager = CLLocationManager()
@@ -229,10 +229,10 @@ private func proposeToAccessLocation(locationUsage: PrivateResource.LocationUsag
 
             switch locationUsage {
 
-            case .WhenInUse:
+            case .whenInUse:
                 locationManager.requestWhenInUseAuthorization()
 
-            case .Always:
+            case .always:
                 locationManager.requestAlwaysAuthorization()
             }
 
@@ -257,31 +257,31 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     let successAction: ProposerAction
     let failureAction: ProposerAction
 
-    init(locationUsage: PrivateResource.LocationUsage, successAction: ProposerAction, failureAction: ProposerAction) {
+    init(locationUsage: PrivateResource.LocationUsage, successAction: @escaping ProposerAction, failureAction: @escaping ProposerAction) {
         self.locationUsage = locationUsage
         self.successAction = successAction
         self.failureAction = failureAction
     }
 
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
 
             switch status {
 
-            case .AuthorizedWhenInUse:
-                self.locationUsage == .WhenInUse ? self.successAction() : self.failureAction()
+            case .authorizedWhenInUse:
+                self.locationUsage == .whenInUse ? self.successAction() : self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
 
-            case .AuthorizedAlways:
-                self.locationUsage == .Always ? self.successAction() : self.failureAction()
+            case .authorizedAlways:
+                self.locationUsage == .always ? self.successAction() : self.failureAction()
 
                 _locationManager = nil
                 _locationDelegate = nil
 
-            case .Denied:
+            case .denied:
                 self.failureAction()
 
                 _locationManager = nil

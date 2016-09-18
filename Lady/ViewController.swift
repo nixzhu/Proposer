@@ -13,16 +13,16 @@ class ViewController: UIViewController {
 
     @IBAction func choosePhoto() {
 
-        let photos: PrivateResource = .Photos
+        let photos: PrivateResource = .photos
 
         proposeToAccess(photos, agreed: {
             print("I can access Photos. :]\n")
 
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
                 let imagePicker = UIImagePickerController()
-                imagePicker.sourceType = .SavedPhotosAlbum
+                imagePicker.sourceType = .savedPhotosAlbum
 
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                self.present(imagePicker, animated: true, completion: nil)
             }
 
         }, rejected: {
@@ -32,16 +32,16 @@ class ViewController: UIViewController {
 
     @IBAction func takePhoto() {
 
-        let camera: PrivateResource = .Camera
+        let camera: PrivateResource = .camera
 
         proposeToAccess(camera, agreed: {
             print("I can access Camera. :]\n")
 
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera){
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
                 let imagePicker = UIImagePickerController()
-                imagePicker.sourceType = .Camera
+                imagePicker.sourceType = .camera
 
-                self.presentViewController(imagePicker, animated: true, completion: nil)
+                self.present(imagePicker, animated: true, completion: nil)
             }
 
         }, rejected: {
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
 
     @IBAction func recordAudio() {
 
-        let microphone: PrivateResource = .Microphone
+        let microphone: PrivateResource = .microphone
 
         proposeToAccess(microphone, agreed: {
             print("I can access Microphone. :]\n")
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
 
     @IBAction func readContacts() {
 
-        let contacts: PrivateResource = .Contacts
+        let contacts: PrivateResource = .contacts
 
         let propose: Propose = {
 
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
 
     @IBAction func shareLocation() {
 
-        let location: PrivateResource = .Location(.WhenInUse)
+        let location: PrivateResource = .location(.whenInUse)
         
         proposeToAccess(location, agreed: {
             print("I can access Location. :]\n")
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
 
     @IBAction func addReminder() {
 
-        let reminders: PrivateResource = .Reminders
+        let reminders: PrivateResource = .reminders
 
         proposeToAccess(reminders, agreed: { 
             print("I can access Reminders. :]\n")
@@ -104,7 +104,7 @@ class ViewController: UIViewController {
 
     @IBAction func addCalendarEvent() {
 
-        let calendar: PrivateResource = .Calendar
+        let calendar: PrivateResource = .calendar
 
         proposeToAccess(calendar, agreed: {
             print("I can access Calendar. :]\n")
