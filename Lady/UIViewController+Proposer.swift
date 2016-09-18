@@ -52,7 +52,7 @@ extension PrivateResource {
 
 extension UIViewController {
 
-    fileprivate func showDialogWithTitle(_ title: String, message: String, cancelTitle: String, confirmTitle: String, withCancelAction cancelAction : (() -> Void)?, confirmAction: (() -> Void)?) {
+    private func showDialogWithTitle(_ title: String, message: String, cancelTitle: String, confirmTitle: String, withCancelAction cancelAction : (() -> Void)?, confirmAction: (() -> Void)?) {
 
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -71,7 +71,7 @@ extension UIViewController {
         }
     }
 
-    func showProposeMessageIfNeedFor(_ resource: PrivateResource, andTryPropose propose: Propose) {
+    func showProposeMessageIfNeedFor(_ resource: PrivateResource, andTryPropose propose: @escaping Propose) {
 
         if resource.isNotDeterminedAuthorization {
             showDialogWithTitle(NSLocalizedString("Notice", comment: ""), message: resource.proposeMessage, cancelTitle: NSLocalizedString("Not now", comment: ""), confirmTitle: NSLocalizedString("OK", comment: ""), withCancelAction: nil, confirmAction: {
