@@ -7,12 +7,31 @@
 //
 
 import Foundation
+import UIKit
 import AVFoundation
 import Photos
 import AddressBook
 import Contacts
 import EventKit
 import CoreLocation
+
+private let askedForNotificationPermissionKey = "Proposer.AskedForNotificationPermission"
+
+extension UIApplication {
+
+    enum NotificationAuthorizationStatus {
+        case notDetermined
+        case authorized
+        case denied
+    }
+    var notificationAuthorizationStatus: NotificationAuthorizationStatus {
+        if UIApplication.shared.currentUserNotificationSettings?.types.isEmpty == false {
+            return .authorized
+        }
+        let asked = UserDefaults.standard.bool(forKey: askedForNotificationPermissionKey)
+        return asked ? .denied : .notDetermined
+    }
+}
 
 public enum PrivateResource {
     case photos
@@ -21,12 +40,12 @@ public enum PrivateResource {
     case contacts
     case reminders
     case calendar
-
     public enum LocationUsage {
         case whenInUse
         case always
     }
     case location(LocationUsage)
+    case notifications(UIUserNotificationSettings)
 
     public var isNotDeterminedAuthorization: Bool {
         switch self {
@@ -44,6 +63,8 @@ public enum PrivateResource {
             return EKEventStore.authorizationStatus(for: .event) == .notDetermined
         case .location:
             return CLLocationManager.authorizationStatus() == .notDetermined
+        case .notifications:
+            return UIApplication.shared.notificationAuthorizationStatus == .notDetermined
         }
     }
 
@@ -68,6 +89,8 @@ public enum PrivateResource {
             case .always:
                 return CLLocationManager.authorizationStatus() == .authorizedAlways
             }
+        case .notifications:
+            return UIApplication.shared.notificationAuthorizationStatus == .authorized
         }
     }
 }
@@ -100,6 +123,9 @@ public func proposeToAccess(_ resource: PrivateResource, agreed successAction: @
 
     case .location(let usage):
         proposeToAccessLocation(usage, agreed: successAction, rejected: failureAction)
+
+    case .notifications(let settings):
+        proposeToSendNotifications(settings, agreed: successAction, rejected: failureAction)
     }
 }
 
@@ -244,6 +270,58 @@ private func proposeToAccessLocation(_ locationUsage: PrivateResource.LocationUs
 
     default:
         failureAction()
+    }
+}
+
+private func proposeToSendNotifications(_ settings: UIUserNotificationSettings, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
+
+    switch UIApplication.shared.notificationAuthorizationStatus {
+    case .notDetermined:
+        let notificationMan = NotificationMan {
+            if UIApplication.shared.notificationAuthorizationStatus == .authorized {
+                successAction()
+            } else {
+                failureAction()
+            }
+        }
+        _notificationMan = notificationMan
+        UIApplication.shared.registerUserNotificationSettings(settings)
+    case .authorized:
+        successAction()
+    case .denied:
+        failureAction()
+    }
+}
+
+// MARK: NotificationMan
+
+private var _notificationMan: NotificationMan?
+
+class NotificationMan: NSObject {
+
+    var finish: (() -> Void)? = nil
+
+    init(_ finish: (() -> Void)?) {
+        super.init()
+
+        self.finish = finish
+        NotificationCenter.default.addObserver(self, selector: #selector(requestingNotifications), name: .UIApplicationWillResignActive, object: nil)
+    }
+
+    @objc private func requestingNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedRequestingNotifications), name: .UIApplicationDidBecomeActive, object: nil)
+    }
+
+    @objc private func finishedRequestingNotifications() {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+
+        UserDefaults.standard.set(true, forKey: askedForNotificationPermissionKey)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            self?.finish?()
+        }
     }
 }
 
