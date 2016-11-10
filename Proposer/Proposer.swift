@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 nixWork. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import AVFoundation
 import Photos
@@ -14,24 +13,6 @@ import AddressBook
 import Contacts
 import EventKit
 import CoreLocation
-
-private let askedForNotificationPermissionKey = "Proposer.AskedForNotificationPermission"
-
-extension UIApplication {
-
-    enum NotificationAuthorizationStatus {
-        case notDetermined
-        case authorized
-        case denied
-    }
-    var notificationAuthorizationStatus: NotificationAuthorizationStatus {
-        if UIApplication.shared.currentUserNotificationSettings?.types.isEmpty == false {
-            return .authorized
-        }
-        let asked = UserDefaults.standard.bool(forKey: askedForNotificationPermissionKey)
-        return asked ? .denied : .notDetermined
-    }
-}
 
 public enum PrivateResource {
     case photos
@@ -96,34 +77,24 @@ public enum PrivateResource {
 }
 
 public typealias Propose = () -> Void
-
 public typealias ProposerAction = () -> Void
 
 public func proposeToAccess(_ resource: PrivateResource, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-
     switch resource {
-
     case .photos:
         proposeToAccessPhotos(agreed: successAction, rejected: failureAction)
-
     case .camera:
         proposeToAccessCamera(agreed: successAction, rejected: failureAction)
-
     case .microphone:
         proposeToAccessMicrophone(agreed: successAction, rejected: failureAction)
-
     case .contacts:
         proposeToAccessContacts(agreed: successAction, rejected: failureAction)
-
     case .reminders:
         proposeToAccessEventForEntityType(.reminder, agreed: successAction, rejected: failureAction)
-
     case .calendar:
         proposeToAccessEventForEntityType(.event, agreed: successAction, rejected: failureAction)
-
     case .location(let usage):
         proposeToAccessLocation(usage, agreed: successAction, rejected: failureAction)
-
     case .notifications(let settings):
         proposeToSendNotifications(settings, agreed: successAction, rejected: failureAction)
     }
@@ -159,13 +130,10 @@ private func proposeToAccessMicrophone(agreed successAction: @escaping ProposerA
 }
 
 private func proposeToAccessContacts(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-
     if #available(iOS 9.0, *) {
         switch CNContactStore.authorizationStatus(for: .contacts) {
-            
         case .authorized:
             successAction()
-            
         case .notDetermined:
             CNContactStore().requestAccess(for: .contacts) { granted, error in
                 DispatchQueue.main.async {
@@ -176,17 +144,13 @@ private func proposeToAccessContacts(agreed successAction: @escaping ProposerAct
                     }
                 }
             }
-            
         default:
             failureAction()
         }
-
     } else {
         switch ABAddressBookGetAuthorizationStatus() {
-
         case .authorized:
             successAction()
-
         case .notDetermined:
             if let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() {
                 ABAddressBookRequestAccessWithCompletion(addressBook) { granted, error in
@@ -199,7 +163,6 @@ private func proposeToAccessContacts(agreed successAction: @escaping ProposerAct
                     }
                 }
             }
-            
         default:
             failureAction()
         }
@@ -207,7 +170,6 @@ private func proposeToAccessContacts(agreed successAction: @escaping ProposerAct
 }
 
 private func proposeToAccessEventForEntityType(_ entityYype: EKEntityType, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-
     switch EKEventStore.authorizationStatus(for: entityYype) {
     case .authorized:
         successAction()
@@ -229,52 +191,38 @@ private func proposeToAccessEventForEntityType(_ entityYype: EKEntityType, agree
 private var _locationManager: CLLocationManager? // as strong ref
 
 private func proposeToAccessLocation(_ locationUsage: PrivateResource.LocationUsage, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-
     switch CLLocationManager.authorizationStatus() {
-
     case .authorizedWhenInUse:
         if locationUsage == .whenInUse {
             successAction()
         } else {
             failureAction()
         }
-
     case .authorizedAlways:
         successAction()
-
     case .notDetermined:
         if CLLocationManager.locationServicesEnabled() {
-
             let locationManager = CLLocationManager()
             _locationManager = locationManager
-
             let delegate = LocationDelegate(locationUsage: locationUsage, successAction: successAction, failureAction: failureAction)
             _locationDelegate = delegate
-
             locationManager.delegate = delegate
-
             switch locationUsage {
-
             case .whenInUse:
                 locationManager.requestWhenInUseAuthorization()
-
             case .always:
                 locationManager.requestAlwaysAuthorization()
             }
-
             locationManager.startUpdatingLocation()
-
         } else {
             failureAction()
         }
-
     default:
         failureAction()
     }
 }
 
 private func proposeToSendNotifications(_ settings: UIUserNotificationSettings, agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-
     switch UIApplication.shared.notificationAuthorizationStatus {
     case .notDetermined:
         let notificationMan = NotificationMan {
@@ -294,11 +242,68 @@ private func proposeToSendNotifications(_ settings: UIUserNotificationSettings, 
     }
 }
 
+// MARK: LocationDelegate
+
+private var _locationDelegate: LocationDelegate? // as strong ref
+
+private class LocationDelegate: NSObject, CLLocationManagerDelegate {
+
+    let locationUsage: PrivateResource.LocationUsage
+    let successAction: ProposerAction
+    let failureAction: ProposerAction
+
+    init(locationUsage: PrivateResource.LocationUsage, successAction: @escaping ProposerAction, failureAction: @escaping ProposerAction) {
+        self.locationUsage = locationUsage
+        self.successAction = successAction
+        self.failureAction = failureAction
+    }
+
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        DispatchQueue.main.async {
+            switch status {
+            case .authorizedWhenInUse:
+                self.locationUsage == .whenInUse ? self.successAction() : self.failureAction()
+                _locationManager = nil
+                _locationDelegate = nil
+            case .authorizedAlways:
+                self.locationUsage == .always ? self.successAction() : self.failureAction()
+                _locationManager = nil
+                _locationDelegate = nil
+            case .denied:
+                self.failureAction()
+                _locationManager = nil
+                _locationDelegate = nil
+            default:
+                break
+            }
+        }
+    }
+}
+
 // MARK: NotificationMan
+
+private let askedForNotificationPermissionKey = "Proposer.AskedForNotificationPermission"
+
+private extension UIApplication {
+
+    enum NotificationAuthorizationStatus {
+        case notDetermined
+        case authorized
+        case denied
+    }
+
+    var notificationAuthorizationStatus: NotificationAuthorizationStatus {
+        if UIApplication.shared.currentUserNotificationSettings?.types.isEmpty == false {
+            return .authorized
+        }
+        let asked = UserDefaults.standard.bool(forKey: askedForNotificationPermissionKey)
+        return asked ? .denied : .notDetermined
+    }
+}
 
 private var _notificationMan: NotificationMan?
 
-class NotificationMan: NSObject {
+private class NotificationMan: NSObject {
 
     var finish: (() -> Void)? = nil
 
@@ -317,58 +322,9 @@ class NotificationMan: NSObject {
     @objc private func finishedRequestingNotifications() {
         NotificationCenter.default.removeObserver(self, name: .UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
-
         UserDefaults.standard.set(true, forKey: askedForNotificationPermissionKey)
-
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
             self?.finish?()
-        }
-    }
-}
-
-// MARK: LocationDelegate
-
-private var _locationDelegate: LocationDelegate? // as strong ref
-
-class LocationDelegate: NSObject, CLLocationManagerDelegate {
-
-    let locationUsage: PrivateResource.LocationUsage
-    let successAction: ProposerAction
-    let failureAction: ProposerAction
-
-    init(locationUsage: PrivateResource.LocationUsage, successAction: @escaping ProposerAction, failureAction: @escaping ProposerAction) {
-        self.locationUsage = locationUsage
-        self.successAction = successAction
-        self.failureAction = failureAction
-    }
-
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-
-        DispatchQueue.main.async {
-
-            switch status {
-
-            case .authorizedWhenInUse:
-                self.locationUsage == .whenInUse ? self.successAction() : self.failureAction()
-
-                _locationManager = nil
-                _locationDelegate = nil
-
-            case .authorizedAlways:
-                self.locationUsage == .always ? self.successAction() : self.failureAction()
-
-                _locationManager = nil
-                _locationDelegate = nil
-
-            case .denied:
-                self.failureAction()
-
-                _locationManager = nil
-                _locationDelegate = nil
-
-            default:
-                break
-            }
         }
     }
 }
