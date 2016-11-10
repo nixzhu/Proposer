@@ -1,11 +1,11 @@
 <p>
-<a href="http://cocoadocs.org/docsets/Proposer"><img src="https://img.shields.io/cocoapods/v/Proposer.svg?style=flat"></a> 
-<a href="https://github.com/Carthage/Carthage/"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a> 
+<a href="http://cocoadocs.org/docsets/Proposer"><img src="https://img.shields.io/cocoapods/v/Proposer.svg?style=flat"></a>
+<a href="https://github.com/Carthage/Carthage/"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat"></a>
 </p>
 
 # Proposer
 
-Proposer provides a single API to request permission for access **Camera**, **Photos**, **Microphone**, **Contacts**, **Reminders**, **Calendar** or **Location**.
+Proposer provides a single API to request permission for access **Camera**, **Photos**, **Microphone**, **Contacts**, **Reminders**, **Calendar**, **Location** or **Notifications**.
 
 ## Requirements
 
@@ -29,20 +29,20 @@ import Proposer
 
 ```swift
 @IBAction func choosePhoto() {
-
-    let photos: PrivateResource = .Photos
-
-    proposeToAccess(photos, agreed: {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = .SavedPhotosAlbum
-
-            self.presentViewController(imagePicker, animated: true, completion: nil)
-        }
-
-    }, rejected: {
-        self.alertNoPermissionToAccess(photos)
-    })
+    let photos: PrivateResource = .photos
+    let propose: Propose = {
+        proposeToAccess(photos, agreed: {
+            print("I can access Photos. :]\n")
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
+                let imagePicker = UIImagePickerController()
+                imagePicker.sourceType = .savedPhotosAlbum
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }, rejected: {
+            self.alertNoPermissionToAccess(photos)
+        })
+    }
+    showProposeMessageIfNeedFor(photos, andTryPropose: propose)
 }
 ```
 
@@ -50,15 +50,15 @@ When you want to get user's location, thanks to Swift's enum, you can even choos
 
 ```swift
 @IBAction func shareLocation() {
-
-    let location: PrivateResource = .Location(.WhenInUse)
-    
-    proposeToAccess(location, agreed: {
-        print("I can access Location. :]\n")
-        
-    }, rejected: {
-        self.alertNoPermissionToAccess(location)
-    })
+    let location: PrivateResource = .location(.whenInUse)
+    let propose: Propose = {
+        proposeToAccess(location, agreed: {
+            print("I can access Location. :]\n")
+        }, rejected: {
+            self.alertNoPermissionToAccess(location)
+        })
+    }
+    showProposeMessageIfNeedFor(location, andTryPropose: propose)
 }
 ```
 
@@ -75,13 +75,13 @@ Feel free to drag `Proposer.swift` to your iOS Project. But it's recommended to 
 ### Carthage
 
 ```ogdl
-github "nixzhu/Proposer" >= 1.0.0
+github "nixzhu/Proposer" >= 1.1.0
 ```
 
 #### CocoaPods
 
 ```ruby
-pod 'Proposer', '~> 1.0.0'
+pod 'Proposer', '~> 1.1.0'
 ```
 
 # Contact

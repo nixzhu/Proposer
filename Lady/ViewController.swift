@@ -74,7 +74,6 @@ class ViewController: UIViewController {
         let propose: Propose = {
             proposeToAccess(location, agreed: {
                 print("I can access Location. :]\n")
-                
             }, rejected: {
                 self.alertNoPermissionToAccess(location)
             })

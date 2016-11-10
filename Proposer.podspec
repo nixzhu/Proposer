@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
   s.name        = "Proposer"
-  s.version     = "1.0.0"
+  s.version     = "1.1.0"
   s.summary     = "Make permission request easier."
 
   s.description = <<-DESC
-                   Proposer provides a single API to request permission for access Camera, Photos, Microphone, Contacts, Reminders, Calender or Location.
+                   Proposer provides a single API to request permission for access Camera, Photos, Microphone, Contacts, Reminders, Calender, Location or Notifications.
                    DESC
 
   s.homepage    = "https://github.com/nixzhu/Proposer"
