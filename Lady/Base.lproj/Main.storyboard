@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yVa-Y4-QEo">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yVa-Y4-QEo">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Lady-->
@@ -15,79 +19,89 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WGp-Ey-Q8x">
-                                <rect key="frame" x="20" y="264" width="275" height="72"/>
+                                <rect key="frame" x="16" y="293" width="166.5" height="81"/>
                                 <state key="normal" title="Choose Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="choosePhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="5KS-xT-PGK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuU-Rb-AoN">
-                                <rect key="frame" x="20" y="346" width="275" height="71"/>
+                                <rect key="frame" x="16" y="384" width="166.5" height="81"/>
                                 <state key="normal" title="Take Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="takePhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="xEw-K3-oDd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eB-xY-hXe">
-                                <rect key="frame" x="20" y="427" width="275" height="72"/>
+                                <rect key="frame" x="16" y="475" width="166.5" height="81"/>
                                 <state key="normal" title="Record Audio">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="recordAudio" destination="BYZ-38-t0r" eventType="touchUpInside" id="twl-hQ-aWC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5n-uM-Ksd">
-                                <rect key="frame" x="20" y="509" width="275" height="71"/>
+                                <rect key="frame" x="16" y="566" width="166.5" height="81"/>
                                 <state key="normal" title="Read Contacts">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="readContacts" destination="BYZ-38-t0r" eventType="touchUpInside" id="VfD-U6-Oj4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOc-Os-IDA">
-                                <rect key="frame" x="305" y="346" width="275" height="71"/>
+                                <rect key="frame" x="192.5" y="384" width="166.5" height="81"/>
                                 <state key="normal" title="Add Reminder">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="addReminder" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aby-Ef-aQ3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q6M-fk-EaK">
-                                <rect key="frame" x="305" y="427" width="275" height="72"/>
+                                <rect key="frame" x="192.5" y="475" width="166.5" height="81"/>
                                 <state key="normal" title="Add Calendar Event">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="addCalendarEvent" destination="BYZ-38-t0r" eventType="touchUpInside" id="EgO-66-O9b"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="otq-Jj-PhF">
-                                <rect key="frame" x="305" y="264" width="275" height="72"/>
+                                <rect key="frame" x="192.5" y="293" width="166.5" height="81"/>
                                 <state key="normal" title="Share Location">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="shareLocation" destination="BYZ-38-t0r" eventType="touchUpInside" id="L4n-Yt-QhC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MVw-rp-Bt8">
+                                <rect key="frame" x="192" y="566" width="166.5" height="81"/>
+                                <state key="normal" title="Send Notifications">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendNotifications" destination="BYZ-38-t0r" eventType="touchUpInside" id="2r8-Th-Dmj"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="M5n-uM-Ksd" secondAttribute="bottom" constant="20" id="3GD-60-JwR"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="3Pr-tc-cft"/>
                             <constraint firstItem="WOc-Os-IDA" firstAttribute="bottom" secondItem="HuU-Rb-AoN" secondAttribute="bottom" id="44e-tA-Inp"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="5SB-zs-22Q"/>
+                            <constraint firstItem="MVw-rp-Bt8" firstAttribute="trailing" secondItem="Q6M-fk-EaK" secondAttribute="trailing" id="6gT-19-Z8Y"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="height" secondItem="8eB-xY-hXe" secondAttribute="height" id="71k-HE-I2b"/>
                             <constraint firstItem="WGp-Ey-Q8x" firstAttribute="width" secondItem="otq-Jj-PhF" secondAttribute="width" id="7hH-zC-RXM"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="leading" secondItem="8eB-xY-hXe" secondAttribute="leading" id="9Qe-XG-NGP"/>
@@ -100,16 +114,19 @@
                             <constraint firstItem="WOc-Os-IDA" firstAttribute="trailing" secondItem="otq-Jj-PhF" secondAttribute="trailing" id="QG4-lS-B7p"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="top" secondItem="WGp-Ey-Q8x" secondAttribute="bottom" constant="10" id="WAB-qM-gwL"/>
                             <constraint firstItem="Q6M-fk-EaK" firstAttribute="trailing" secondItem="WOc-Os-IDA" secondAttribute="trailing" id="ZHB-hA-NaI"/>
+                            <constraint firstItem="MVw-rp-Bt8" firstAttribute="top" secondItem="M5n-uM-Ksd" secondAttribute="top" id="aNn-y9-bFN"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bEO-dn-RoJ"/>
                             <constraint firstItem="M5n-uM-Ksd" firstAttribute="trailing" secondItem="8eB-xY-hXe" secondAttribute="trailing" id="bxS-ze-yLo"/>
                             <constraint firstItem="Q6M-fk-EaK" firstAttribute="leading" secondItem="WOc-Os-IDA" secondAttribute="leading" id="exj-cn-nVp"/>
                             <constraint firstItem="Q6M-fk-EaK" firstAttribute="top" secondItem="8eB-xY-hXe" secondAttribute="top" id="fwI-Ls-b13"/>
                             <constraint firstItem="WOc-Os-IDA" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="top" id="iLs-QS-MPw"/>
+                            <constraint firstItem="MVw-rp-Bt8" firstAttribute="bottom" secondItem="M5n-uM-Ksd" secondAttribute="bottom" id="imc-cV-UAs"/>
                             <constraint firstItem="8eB-xY-hXe" firstAttribute="top" secondItem="HuU-Rb-AoN" secondAttribute="bottom" constant="10" id="ipi-za-oIN"/>
                             <constraint firstItem="otq-Jj-PhF" firstAttribute="height" secondItem="WGp-Ey-Q8x" secondAttribute="height" id="jLH-12-tco"/>
                             <constraint firstItem="Q6M-fk-EaK" firstAttribute="bottom" secondItem="8eB-xY-hXe" secondAttribute="bottom" id="l1y-rA-mI4"/>
                             <constraint firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="mh8-2k-K6h"/>
                             <constraint firstItem="HuU-Rb-AoN" firstAttribute="trailing" secondItem="WGp-Ey-Q8x" secondAttribute="trailing" id="n9Q-Wk-MN6"/>
+                            <constraint firstItem="MVw-rp-Bt8" firstAttribute="leading" secondItem="Q6M-fk-EaK" secondAttribute="leading" id="p2n-Md-mfC"/>
                             <constraint firstItem="otq-Jj-PhF" firstAttribute="centerY" secondItem="WGp-Ey-Q8x" secondAttribute="centerY" id="rXg-lv-u56"/>
                             <constraint firstAttribute="trailingMargin" secondItem="otq-Jj-PhF" secondAttribute="trailing" id="sUX-PW-6pD"/>
                         </constraints>

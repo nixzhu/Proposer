@@ -287,6 +287,7 @@ private func proposeToSendNotifications(_ settings: UIUserNotificationSettings, 
         _notificationMan = notificationMan
         UIApplication.shared.registerUserNotificationSettings(settings)
     case .authorized:
+        UIApplication.shared.registerUserNotificationSettings(settings)
         successAction()
     case .denied:
         failureAction()

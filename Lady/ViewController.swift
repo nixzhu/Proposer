@@ -113,5 +113,26 @@ class ViewController: UIViewController {
             self.alertNoPermissionToAccess(calendar)
         })
     }
+
+    @IBAction func sendNotifications() {
+
+        let settings = UIUserNotificationSettings(
+            types: [.alert, .badge, .sound],
+            categories: nil
+        )
+        let notifications: PrivateResource = .notifications(settings)
+
+        let propose: Propose = {
+
+            proposeToAccess(notifications, agreed: {
+                print("I can send Notifications. :]\n")
+
+            }, rejected: {
+                self.alertNoPermissionToAccess(notifications)
+            })
+        }
+
+        showProposeMessageIfNeedFor(notifications, andTryPropose: propose)
+    }
 }
 
