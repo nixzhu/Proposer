@@ -70,7 +70,7 @@ I recommend you add a `UIViewController+Proposer.swift` file (like the demo) for
 
 ## Installation
 
-Feel free to drag `Proposer.swift` to your iOS Project. But it's recommended to use Carthage (or CocoaPodsr) .
+Feel free to drag `Proposer.swift` to your iOS Project. But it's recommended to use Carthage (or CocoaPods).
 
 ### Carthage
 
