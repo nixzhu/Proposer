@@ -33,7 +33,7 @@ public enum PrivateResource {
         case .photos:
             return PHPhotoLibrary.authorizationStatus() == .notDetermined
         case .camera:
-            return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .notDetermined
+            return AVCaptureDevice.authorizationStatus(for: .video) == .notDetermined
         case .microphone:
             return AVAudioSession.sharedInstance().recordPermission() == .undetermined
         case .contacts:
@@ -54,7 +54,7 @@ public enum PrivateResource {
         case .photos:
             return PHPhotoLibrary.authorizationStatus() == .authorized
         case .camera:
-            return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
+            return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         case .microphone:
             return AVAudioSession.sharedInstance().recordPermission() == .granted
         case .contacts:
@@ -114,7 +114,7 @@ private func proposeToAccessPhotos(agreed successAction: @escaping ProposerActio
 }
 
 private func proposeToAccessCamera(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-    AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
+    AVCaptureDevice.requestAccess(for: .video) { granted in
         DispatchQueue.main.async {
             granted ? successAction() : failureAction()
         }
