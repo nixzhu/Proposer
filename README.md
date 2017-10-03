@@ -9,9 +9,9 @@ Proposer provides a single API to request permission for access **Camera**, **Ph
 
 ## Requirements
 
-Swift 3.0, iOS 8.0
+Swift 4, iOS 8.0
 
-(Swift 2.3, use version 0.9.1)
+(Swift 3, use version 1.1.0)
 
 ## Example
 
@@ -75,13 +75,13 @@ Feel free to drag `Proposer.swift` to your iOS Project. But it's recommended to 
 ### Carthage
 
 ```ogdl
-github "nixzhu/Proposer" >= 1.1.0
+github "nixzhu/Proposer"
 ```
 
 #### CocoaPods
 
 ```ruby
-pod 'Proposer', '~> 1.1.0'
+pod 'Proposer'
 ```
 
 # Contact
