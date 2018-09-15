@@ -9,7 +9,7 @@ Proposer provides a single API to request permission for access **Camera**, **Ph
 
 ## Requirements
 
-Swift 4, iOS 8.0
+Swift 4.2, iOS 8.0
 
 (Swift 3, use version 1.1.0)
 
@@ -33,7 +33,7 @@ import Proposer
     let propose: Propose = {
         proposeToAccess(photos, agreed: {
             print("I can access Photos. :]\n")
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
                 let imagePicker = UIImagePickerController()
                 imagePicker.sourceType = .savedPhotosAlbum
                 self.present(imagePicker, animated: true, completion: nil)
