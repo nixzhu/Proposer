@@ -35,7 +35,7 @@ public enum PrivateResource {
         case .camera:
             return AVCaptureDevice.authorizationStatus(for: .video) == .notDetermined
         case .microphone:
-            return AVAudioSession.sharedInstance().recordPermission() == .undetermined
+            return AVAudioSession.sharedInstance().recordPermission == .undetermined
         case .contacts:
             return ABAddressBookGetAuthorizationStatus() == .notDetermined
         case .reminders:
@@ -56,7 +56,7 @@ public enum PrivateResource {
         case .camera:
             return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         case .microphone:
-            return AVAudioSession.sharedInstance().recordPermission() == .granted
+            return AVAudioSession.sharedInstance().recordPermission == .granted
         case .contacts:
             return ABAddressBookGetAuthorizationStatus() == .authorized
         case .reminders:
@@ -311,17 +311,17 @@ private class NotificationMan: NSObject {
         super.init()
 
         self.finish = finish
-        NotificationCenter.default.addObserver(self, selector: #selector(requestingNotifications), name: .UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(requestingNotifications), name: UIApplication.willResignActiveNotification, object: nil)
     }
 
     @objc private func requestingNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(finishedRequestingNotifications), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedRequestingNotifications), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     @objc private func finishedRequestingNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
         UserDefaults.standard.set(true, forKey: askedForNotificationPermissionKey)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
             self?.finish?()
