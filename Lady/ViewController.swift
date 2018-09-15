@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let propose: Propose = {
             proposeToAccess(photos, agreed: {
                 print("I can access Photos. :]\n")
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum) {
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.savedPhotosAlbum) {
                     let imagePicker = UIImagePickerController()
                     imagePicker.sourceType = .savedPhotosAlbum
                     self.present(imagePicker, animated: true, completion: nil)
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         let propose: Propose = {
             proposeToAccess(camera, agreed: {
                 print("I can access Camera. :]\n")
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
                     let imagePicker = UIImagePickerController()
                     imagePicker.sourceType = .camera
                     self.present(imagePicker, animated: true, completion: nil)
