@@ -101,15 +101,22 @@ public func proposeToAccess(_ resource: PrivateResource, agreed successAction: @
 }
 
 private func proposeToAccessPhotos(agreed successAction: @escaping ProposerAction, rejected failureAction: @escaping ProposerAction) {
-    PHPhotoLibrary.requestAuthorization { status in
-        DispatchQueue.main.async {
-            switch status {
-            case .authorized:
-                successAction()
-            default:
-                failureAction()
+    switch PHPhotoLibrary.authorizationStatus() {
+    case .authorized:
+        successAction()
+    case .notDetermined:
+        PHPhotoLibrary.requestAuthorization { status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized:
+                    successAction()
+                default:
+                    failureAction()
+                }
             }
         }
+    default:
+        failureAction()
     }
 }
 
