@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name        = "Proposer"
-  s.version     = "1.2.1"
+  s.version     = "1.2.3"
   s.summary     = "Make permission request easier."
 
   s.description = <<-DESC
