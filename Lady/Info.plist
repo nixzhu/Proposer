@@ -22,8 +22,20 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>"Lady" Would Like to Access Calendars Usage</string>
+	<key>NSCameraUsageDescription</key>
+	<string>"Lady" Would Like to Access Camera Usage</string>
+	<key>NSContactsUsageDescription</key>
+	<string>"Lady" Would Like to Access Contacts Usage</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Hello lady, share location need this permission.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>"Lady" Would Like to Access Microphone Usage</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>"Lady" Would Like to Access Your Photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>"Lady" Would Like to Access Reminders Usage</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
